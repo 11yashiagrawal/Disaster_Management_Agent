@@ -18,6 +18,8 @@ class NLPParser(ABC):
         call_id: str,
         timestamp: str,
         transcript: str,
+        raw_transcript: str | None = None,
+        panic_score: float | None = None,
     ) -> ExtractionResultDTO:
         """
         Convert raw emergency call transcript into structured output.

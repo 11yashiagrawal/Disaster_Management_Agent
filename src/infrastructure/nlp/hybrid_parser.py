@@ -4,6 +4,7 @@ from src.application.dto.enriched_transcript_dto import EnrichedTranscriptDTO
 from src.application.dto.extraction_result_dto import ExtractionResultDTO
 from src.application.interfaces.nlp_parser import NLPParser
 from src.application.interfaces.transcript_enricher import TranscriptEnricher
+from src.core.utils.panic_score import compute_panic_score
 from src.core.utils.transcript_correction import repair_transcript
 from src.infrastructure.nlp.regex_parser import RegexParser
 
@@ -21,9 +22,11 @@ class HybridParser(NLPParser):
         self,
         *,
         enricher: TranscriptEnricher,
-        fallback_parser: Optional[RegexParser] = None,
+        llm_parser: Optional[NLPParser] = None,
+        fallback_parser: Optional[NLPParser] = None,
     ) -> None:
         self.enricher = enricher
+        self.llm_parser = llm_parser
         self.fallback_parser = fallback_parser or RegexParser()
 
     def parse(
@@ -32,7 +35,12 @@ class HybridParser(NLPParser):
         call_id: str,
         timestamp: str,
         transcript: str,
+        raw_transcript: str | None = None,
+        panic_score: float | None = None,
     ) -> ExtractionResultDTO:
+        original_transcript = raw_transcript or transcript
+        panic = panic_score if panic_score is not None else compute_panic_score(original_transcript)
+
         repaired_transcript = repair_transcript(transcript)
 
         enriched = self.enricher.enrich(transcript=repaired_transcript)
@@ -41,13 +49,15 @@ class HybridParser(NLPParser):
             enriched=enriched,
         )
 
-        result = self.fallback_parser.parse(
+        parser = self.llm_parser or self.fallback_parser
+        result = parser.parse(
             call_id=call_id,
             timestamp=timestamp,
             transcript=augmented_transcript,
+            raw_transcript=original_transcript,
+            panic_score=panic,
         )
 
-        result.raw_transcript = transcript
         return result
 
     def _build_augmented_transcript(

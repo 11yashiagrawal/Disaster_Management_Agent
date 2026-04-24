@@ -156,6 +156,25 @@ def test_regex_parser_generates_event_signature() -> None:
     assert result.deduplication.event_signature == "fire|near_green_park_metro_station"
 
 
+def test_regex_parser_marks_duplicates_in_memory() -> None:
+    parser = RegexParser()
+
+    first = parser.parse(
+        call_id="CALL_DUP_001",
+        timestamp="2026-04-23T16:30:00Z",
+        transcript="There is a gas leak near Silver Lane Market.",
+    )
+    second = parser.parse(
+        call_id="CALL_DUP_002",
+        timestamp="2026-04-23T16:31:00Z",
+        transcript="There is a gas leak near Silver Lane Market.",
+    )
+
+    assert first.deduplication is not None
+    assert second.deduplication is not None
+    assert second.deduplication.possible_duplicate_of == "CALL_DUP_001"
+
+
 def test_regex_parser_marks_missing_location_when_not_found() -> None:
     parser = RegexParser()
 

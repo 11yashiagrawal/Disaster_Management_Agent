@@ -35,4 +35,4 @@ def test_build_event_signature_lowercases_and_normalizes_spaces() -> None:
         location_raw="  Near   Sector 17 Market  ",
     )
 
-    assert result == "gas_leak|near___sector_17_market"
+    assert result == "gas_leak|near_sector_17_market"

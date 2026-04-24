@@ -12,6 +12,7 @@ from src.application.dto.extraction_result_dto import (
     ResourcesNeededDTO,
 )
 from src.application.interfaces.nlp_parser import NLPParser
+from src.core.utils.deduplication_registry import check_duplicate, register_signature
 from src.core.utils.confidence import compute_extraction_confidence
 from src.core.utils.event_signature import build_event_signature
 from src.core.utils.number_parsing import extract_leading_number_token
@@ -43,7 +44,10 @@ class RegexParser(NLPParser):
         call_id: str,
         timestamp: str,
         transcript: str,
+        raw_transcript: str | None = None,
+        panic_score: float | None = None,
     ) -> ExtractionResultDTO:
+        original_transcript = raw_transcript or transcript
         cleaned_transcript = normalize_transcript(transcript)
 
         incident_type = self._extract_incident_type(cleaned_transcript)
@@ -71,16 +75,30 @@ class RegexParser(NLPParser):
         )
 
         location_confidence = 0.85 if location_raw else 0.20
+        has_casualties = any(
+            value is not None for value in (people_trapped, injured_count, dead_count)
+        )
+        has_resources = any(
+            value > 0
+            for value in (
+                resources_needed.ambulance,
+                resources_needed.fire_truck,
+                resources_needed.police_unit,
+                resources_needed.rescue_team,
+            )
+        )
         overall_confidence = compute_extraction_confidence(
             incident_type=incident_type,
             severity=severity,
             location_found=bool(location_raw),
+            has_casualties=has_casualties,
+            has_resources=has_resources,
         )
 
         return ExtractionResultDTO(
             call_id=call_id,
             timestamp=timestamp,
-            raw_transcript=transcript,
+            raw_transcript=original_transcript,
             incident=IncidentDTO(
                 type=incident_type,
                 subtype=self._extract_subtype(incident_type, cleaned_transcript),
@@ -114,9 +132,14 @@ class RegexParser(NLPParser):
             ),
             deduplication=DeduplicationDTO(
                 event_signature=event_signature,
-                possible_duplicate_of=None,
+                possible_duplicate_of=self._resolve_duplicate(event_signature, call_id),
             ),
         )
+
+    def _resolve_duplicate(self, event_signature: str, call_id: str) -> Optional[str]:
+        duplicate_of = check_duplicate(event_signature)
+        register_signature(event_signature, call_id)
+        return duplicate_of
 
     def _extract_incident_type(self, text: str) -> IncidentType:
         if re.search(r"\b(fire|smoke|burning|flames|blaze|sparked)\b", text):

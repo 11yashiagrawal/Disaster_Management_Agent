@@ -1,2 +1,8 @@
-pydantic
-python-dotenv
+# This dependency set is tested on Python 3.11/3.12.
+# spaCy build dependencies currently fail on Python 3.14.
+pydantic>=2.0
+python-dotenv>=1.0
+groq>=0.9
+spacy>=3.7
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
+pytest>=8.0

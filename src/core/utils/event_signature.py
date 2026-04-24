@@ -17,6 +17,7 @@ def build_event_signature(
         -> "fire|near_green_park_metro_station"
     """
     normalized_location = (location_raw or "unknown").strip().lower()
+    normalized_location = re.sub(r"\s+", " ", normalized_location)
     normalized_location = normalized_location.replace(" ", "_")
     normalized_location = re.sub(r"[^a-z0-9_]", "", normalized_location)
 

@@ -85,3 +85,59 @@ def test_semantic_triage_parser_builds_structured_output_from_llm_json() -> None
 
     assert client.messages[0]["role"] == "system"
     assert "JSON SCHEMA" in client.messages[1]["content"]
+    assert "panic_score:" in client.messages[1]["content"]
+
+
+def test_semantic_triage_parser_uses_raw_transcript_for_panic_scoring() -> None:
+    response_text = """
+    {
+      "call_id": "ignored",
+      "timestamp": "ignored",
+      "raw_transcript": "ignored",
+      "incident": {
+        "type": "fire",
+        "subtype": null,
+        "severity": "high",
+        "description": "Fire"
+      },
+      "location": {
+        "raw_text": "unknown",
+        "landmark": null,
+        "address": null,
+        "area": null,
+        "city": null,
+        "coordinates": {"lat": null, "lng": null},
+        "confidence": 0.2
+      },
+      "casualties": null,
+      "hazards": [],
+      "resources_needed": {
+        "ambulance": 0,
+        "fire_truck": 0,
+        "police_unit": 0,
+        "rescue_team": 0
+      },
+      "caller_context": null,
+      "extraction_metadata": {
+        "missing_fields": [],
+        "contradictions_detected": [],
+        "overall_confidence": 0.3
+      },
+      "deduplication": {
+        "event_signature": "fire|unknown",
+        "possible_duplicate_of": null
+      }
+    }
+    """
+
+    client = FakeLLMClient(response_text=response_text)
+    parser = SemanticTriageParser(client=client)
+
+    parser.parse(
+        call_id="CALL_LLM_002",
+        timestamp="2026-04-24T18:30:00Z",
+        transcript="REPAIRED TEXT ONLY",
+        raw_transcript="THIS IS A PANIC CALL PLEASE HELP!!",
+    )
+
+    assert "THIS IS A PANIC CALL PLEASE HELP!!" in client.messages[1]["content"]
