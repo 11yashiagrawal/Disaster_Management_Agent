@@ -1,17 +1,22 @@
 import json
+import sys
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from src.application.use_cases.parse_emergency_call import ParseEmergencyCallUseCase
-from src.infrastructure.nlp.regex_parser import RegexParser
+from src.infrastructure.nlp.parser_factory import build_triage_parser
 
 
 def main() -> None:
-    sample_call_path = Path("src/contracts/examples/sample_call.json")
+    sample_call_path = PROJECT_ROOT / "src" / "contracts" / "examples" / "sample_call.json"
 
     with sample_call_path.open("r", encoding="utf-8") as file:
         payload = json.load(file)
 
-    parser = RegexParser()
+    parser = build_triage_parser()
     use_case = ParseEmergencyCallUseCase(parser=parser)
 
     result = use_case.execute(

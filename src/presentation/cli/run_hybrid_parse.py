@@ -1,17 +1,21 @@
 import json
+import sys
 from pathlib import Path
 
-from src.infrastructure.nlp.hybrid_parser import HybridParser
-from src.infrastructure.nlp.spacy_transcript_enricher import SpacyTranscriptEnricher
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.infrastructure.nlp.parser_factory import build_triage_parser
 
 
 def main() -> None:
-    sample_call_path = Path("src/contracts/examples/sample_call.json")
+    sample_call_path = PROJECT_ROOT / "src" / "contracts" / "examples" / "sample_call.json"
 
     with sample_call_path.open("r", encoding="utf-8") as file:
         payload = json.load(file)
 
-    parser = HybridParser(enricher=SpacyTranscriptEnricher())
+    parser = build_triage_parser()
 
     result = parser.parse(
         call_id=payload["call_id"],
