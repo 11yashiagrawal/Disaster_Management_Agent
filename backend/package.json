@@ -1,0 +1,27 @@
+{
+  "name": "disaster_management_agent",
+  "version": "1.0.0",
+  "description": "- Yashi Agrawal - Isha Tomar - Pratyush Chouksey - Kavya Katal",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev:api": "PYTHONPATH=src uvicorn src.presentation.api.app:app --reload",
+    "demo:full": "PYTHONPATH=src python -m src.presentation.cli.run_full_pipeline",
+    "test:all": "PYTHONPATH=src pytest tests/unit tests/integration -v",
+    "test:noisy": "PYTHONPATH=src pytest tests/integration/test_hybrid_parser_noisy_asr_transcripts.py -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KatalKavya96/Disaster_Management_Agent.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/KatalKavya96/Disaster_Management_Agent/issues"
+  },
+  "homepage": "https://github.com/KatalKavya96/Disaster_Management_Agent#readme"
+}
