@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.presentation.api.routers.emergency_call_router import router as emergency_call_router
+from presentation.api.routers.audio_router import router as audio_router
 
 
 app = FastAPI(
@@ -25,3 +26,5 @@ def health_check():
 
 
 app.include_router(emergency_call_router)
+
+app.include_router(audio_router)

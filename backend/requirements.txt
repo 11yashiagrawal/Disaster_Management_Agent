@@ -3,3 +3,7 @@ uvicorn
 pydantic
 spacy
 pytest
+python-multipart
+openai-whisper
+numpy
+torch

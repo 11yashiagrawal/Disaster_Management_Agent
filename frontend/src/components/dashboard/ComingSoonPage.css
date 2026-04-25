@@ -1,0 +1,52 @@
+.coming-soon-dashboard-card {
+  grid-column: 1 / -1;
+  padding: 48px;
+}
+
+.coming-soon-dashboard-inner {
+  max-width: 720px;
+}
+
+.coming-soon-dashboard-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: #fff1f2;
+  color: #ff313d;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+}
+
+.coming-soon-dashboard-card h3 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.coming-soon-dashboard-card p {
+  color: #697386;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.coming-soon-status-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.coming-soon-status-grid div {
+  border: 1px solid #dfe5ee;
+  border-radius: 12px;
+  padding: 18px;
+  background: #fbfdff;
+  font-weight: 700;
+  color: #111827;
+}
+
+@media (max-width: 720px) {
+  .coming-soon-status-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,132 @@
+.timeline-panel {
+  grid-column: 3;
+  grid-row: 2 / span 2;
+  padding: 20px 14px;
+  min-height: 478px;
+  animation: riseIn 0.45s ease both;
+}
+
+.timeline {
+  margin-top: 24px;
+  position: relative;
+  padding-left: 8px;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 10px;
+  bottom: 40px;
+  width: 2px;
+  background: #dce4ef;
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 18px;
+  padding-left: 32px;
+  margin-bottom: 34px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  z-index: 1;
+  animation: dotPop 0.45s ease both;
+}
+
+.timeline-item:nth-child(1) .timeline-dot {
+  animation-delay: 0.1s;
+}
+
+.timeline-item:nth-child(2) .timeline-dot {
+  animation-delay: 0.2s;
+}
+
+.timeline-item:nth-child(3) .timeline-dot {
+  animation-delay: 0.3s;
+}
+
+.timeline-item:nth-child(4) .timeline-dot {
+  animation-delay: 0.4s;
+}
+
+.timeline-item:nth-child(5) .timeline-dot {
+  animation-delay: 0.5s;
+}
+
+.timeline-dot.red {
+  background: var(--red);
+}
+
+.timeline-dot.blue {
+  background: var(--blue);
+}
+
+.timeline-dot.purple {
+  background: var(--purple);
+}
+
+.timeline-dot.orange {
+  background: var(--orange);
+}
+
+.timeline-dot.green {
+  background: var(--green);
+}
+
+.timeline-item time {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.timeline-item strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.timeline-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@keyframes dotPop {
+  from {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1280px) {
+  .timeline-panel {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}

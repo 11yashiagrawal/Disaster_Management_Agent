@@ -1,0 +1,131 @@
+.triage-panel {
+  min-height: 432px;
+  padding: 20px 14px 16px;
+}
+
+.metric-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.metric-card {
+  min-height: 144px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fff, #f8fafc);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  text-align: center;
+  padding: 14px 10px;
+  animation: riseIn 0.45s ease both;
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.09);
+}
+
+.metric-card:nth-child(1) {
+  animation-delay: 0.04s;
+}
+
+.metric-card:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.metric-card:nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+.metric-card:nth-child(4) {
+  animation-delay: 0.16s;
+}
+
+.metric-card:nth-child(5) {
+  animation-delay: 0.2s;
+}
+
+.metric-card:nth-child(6) {
+  animation-delay: 0.24s;
+}
+
+.metric-card svg {
+  color: #64748b;
+}
+
+.metric-card span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.metric-card strong {
+  color: #111827;
+  font-size: 16px;
+  line-height: 1.45;
+  text-transform: capitalize;
+}
+
+.metric-card strong em {
+  color: #64748b;
+  font-size: 13px;
+  font-style: normal;
+}
+
+.priority-metric {
+  background: var(--red-soft);
+  border-color: #fecaca;
+  box-shadow: inset 3px 0 0 var(--red);
+  animation: priorityPulse 1.6s ease-in-out infinite;
+}
+
+.priority-metric svg,
+.priority-metric strong {
+  color: var(--red);
+}
+
+.priority-metric strong {
+  font-size: 31px;
+  line-height: 1;
+}
+
+.orange-text {
+  color: var(--orange) !important;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes priorityPulse {
+  0%,
+  100% {
+    box-shadow: inset 3px 0 0 var(--red), 0 0 0 rgba(255, 49, 61, 0);
+  }
+
+  50% {
+    box-shadow: inset 3px 0 0 var(--red),
+      0 0 28px rgba(255, 49, 61, 0.22);
+  }
+}
+
+@media (max-width: 640px) {
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+}

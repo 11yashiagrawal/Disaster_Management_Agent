@@ -1,0 +1,176 @@
+.voice-panel {
+  margin-top: 14px;
+  border: 1px solid #dfe5ee;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.voice-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.voice-head strong {
+  display: block;
+  font-size: 13px;
+  color: #111827;
+  margin-bottom: 3px;
+}
+
+.voice-head span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.voice-upload-btn {
+  background: #081322;
+  color: white;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  height: fit-content;
+}
+
+.voice-horizontal-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.voice-horizontal-card {
+  min-width: 220px;
+  border: 1px solid #dfe5ee;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  flex: 0 0 220px;
+}
+
+.voice-meta strong {
+  display: block;
+  font-size: 12px;
+  color: #111827;
+}
+
+.voice-meta span {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin: 2px 0 8px;
+}
+
+.voice-horizontal-card audio {
+  width: 100%;
+  height: 32px;
+  margin-bottom: 8px;
+}
+
+.voice-horizontal-card button {
+  width: 100%;
+  border: 0;
+  background: #ef3340;
+  color: white;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.voice-transcript {
+  margin-top: 12px;
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.voice-transcript strong {
+  display: block;
+  color: #166534;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.voice-transcript p {
+  margin: 0;
+  color: #166534;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .voice-head {
+    flex-direction: column;
+  }
+
+  .voice-horizontal-card {
+    min-width: 190px;
+    flex-basis: 190px;
+  }
+}
+
+.voice-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.voice-record-btn {
+  border: 0;
+  background: #ef3340;
+  color: white;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.voice-record-btn.recording {
+  background: #991b1b;
+  animation: recordPulse 1s ease-in-out infinite;
+}
+
+.recorded-audio-box {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.recorded-audio-box strong {
+  display: block;
+  font-size: 12px;
+  color: #9a3412;
+  margin-bottom: 8px;
+}
+
+.recorded-audio-box audio {
+  width: 100%;
+  height: 34px;
+}
+
+@keyframes recordPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(239, 51, 64, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px rgba(239, 51, 64, 0.18);
+  }
+}
+
+@media (max-width: 900px) {
+  .voice-actions {
+    flex-wrap: wrap;
+  }
+}

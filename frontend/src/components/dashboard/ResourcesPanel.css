@@ -1,0 +1,142 @@
+.resources-panel {
+  min-height: 432px;
+  padding: 20px 14px 16px;
+}
+
+.resources-panel h3 {
+  margin-bottom: 22px;
+}
+
+.resource-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.resource-row {
+  min-height: 62px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfdff;
+  display: grid;
+  grid-template-columns: 42px 1fr 78px 76px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  animation: riseIn 0.45s ease both;
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.resource-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.09);
+}
+
+.resource-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+}
+
+.resource-icon.ambulance {
+  background: #fee2e2;
+  color: var(--red);
+}
+
+.resource-icon.fire_truck {
+  background: #ffedd5;
+  color: #f97316;
+}
+
+.resource-icon.police_unit {
+  background: #dbeafe;
+  color: #3b82f6;
+}
+
+.resource-icon.rescue_team {
+  background: #ede9fe;
+  color: #8b5cf6;
+}
+
+.resource-info strong {
+  display: block;
+  font-size: 13px;
+}
+
+.resource-info span,
+.enroute,
+.eta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.enroute {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+}
+
+.enroute i {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #10b981;
+  animation: livePulse 1.4s ease-in-out infinite;
+}
+
+.eta {
+  text-align: right;
+  font-weight: 700;
+}
+
+.empty-state {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@keyframes livePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+  }
+
+  50% {
+    transform: scale(1.25);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.55);
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1280px) {
+  .resources-panel {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .resource-row {
+    grid-template-columns: 40px 1fr;
+  }
+
+  .enroute,
+  .eta {
+    grid-column: 2;
+    text-align: left;
+  }
+}
